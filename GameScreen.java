@@ -1,5 +1,7 @@
 // Importing Packages
 import javax.swing.*; // User Interface
+import javax.swing.plaf.DimensionUIResource;
+
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
 import java.awt.event.*; // Allows for events
 
@@ -15,7 +17,7 @@ public class GameScreen extends JPanel implements ActionListener {
 
     public GameScreen() {
 
-
+        setMinimumSize(new Dimension(330, 330));
 
         // Change x and y coordinate when adding GridBagLayout components
         if (RIGHT_TO_LEFT) {
@@ -49,6 +51,10 @@ public class GameScreen extends JPanel implements ActionListener {
 
         for(int i = 0; i < buttons.length; i++) {
             JButton button = new JButton("");
+            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBorderPainted(true);
+            button.setPreferredSize(new DimensionUIResource(50, 50));
             button.addActionListener(this);
             button.setActionCommand(Integer.toString(i));
             buttons[i] = button;
@@ -70,15 +76,12 @@ public class GameScreen extends JPanel implements ActionListener {
         String uInput = e.getActionCommand();
         Integer index = Integer.valueOf(uInput);
 
-        // System.out.println(e.getActionCommand());
-
         // Makes button unclickable
         buttons[index].setEnabled(false);
         buttons[index].setText(turn);
+        buttons[index].setBorderPainted(false);
 
         nextState();
-
-
 
     }
 
@@ -112,15 +115,14 @@ public class GameScreen extends JPanel implements ActionListener {
 
         determineWinner(diagD);
         determineWinner(diagU);
-        
-
-
+    
     }
 
 
     public void setWinner() {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setEnabled(false);
+            buttons[i].setBorderPainted(false);
         }
 
         labelTurn.setText(turn + " wins!");
@@ -139,16 +141,12 @@ public class GameScreen extends JPanel implements ActionListener {
         }
     }
 
-
-
     public void determineDraw() {
         String boardState = "";
 
         for (int i = 0; i < buttons.length; i++) {
             boardState += buttons[i].getText();
         }
-        System.out.println(boardState);
-        System.out.println(boardState.length());
 
         if (boardState.length() == 9) {
             labelTurn.setText("Draw!");
@@ -164,7 +162,27 @@ public class GameScreen extends JPanel implements ActionListener {
         return turn;
     }
 
-    public static void resetGame(JButton[] buttons, String turn) {
+    // Setters
+    public void setState(JButton[] newButtons) {
+        this.buttons = newButtons;
+    }
+
+    public void setTurn(String newTurn) {
+        turn = newTurn;
+    }
+
+    // public static void resetGame(JButton[] buttons, String turn) {
+    //     for(int i = 0; i < buttons.length; i++) {
+    //         buttons[i].setText("");
+    //         buttons[i].setEnabled(true);
+            
+    //     }
+
+    //     turn = "O";
+    // }
+
+
+    public void resetGame() {
         for(int i = 0; i < buttons.length; i++) {
             buttons[i].setText("");
             buttons[i].setEnabled(true);
@@ -173,6 +191,7 @@ public class GameScreen extends JPanel implements ActionListener {
 
         turn = "O";
     }
+
 
 
 
