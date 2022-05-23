@@ -38,6 +38,7 @@ public class GameScreen extends JPanel implements ActionListener {
 
         setLayout(new GridBagLayout());
 
+        // Creating Label and properties
         labelTurn = new JLabel(turn + "'s turn", SwingConstants.CENTER);
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 0; // x location
@@ -48,7 +49,7 @@ public class GameScreen extends JPanel implements ActionListener {
         c.insets = new Insets(5, 5, 5, 5); // Whitespace
         add(labelTurn, c);
 
-
+        // Creating buttons and properties
         for(int i = 0; i < buttons.length; i++) {
             JButton button = new JButton("");
             button.setOpaque(false);
@@ -71,7 +72,7 @@ public class GameScreen extends JPanel implements ActionListener {
         // End of Buttons
     }
 
-
+    // Button listener
     public void actionPerformed(ActionEvent e) {
         String uInput = e.getActionCommand();
         Integer index = Integer.valueOf(uInput);
@@ -85,6 +86,7 @@ public class GameScreen extends JPanel implements ActionListener {
 
     }
 
+    // Brings game to the next state
     public void nextState() {
 
         // Changes the turn
@@ -118,7 +120,7 @@ public class GameScreen extends JPanel implements ActionListener {
     
     }
 
-
+    // Once winner has been determined, this will run. Disables all buttons and displays who won
     public void setWinner() {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setEnabled(false);
@@ -128,6 +130,7 @@ public class GameScreen extends JPanel implements ActionListener {
         labelTurn.setText(turn + " wins!");
     }
 
+    // Determine if anyone has one based on current game state
     public void determineWinner(String line) {
         switch (line) {
             case "XXX":
@@ -141,6 +144,7 @@ public class GameScreen extends JPanel implements ActionListener {
         }
     }
 
+    // Will determine draw if all boxes have been filled before someone has one, call determine winner after to check if someone has won
     public void determineDraw() {
         String boardState = "";
 
@@ -153,50 +157,15 @@ public class GameScreen extends JPanel implements ActionListener {
         }
     }
 
-    // Getters
-    public JButton[] getState() {
-        return buttons;
-    }
-
-    public String getTurn() {
-        return turn;
-    }
-
-    // Setters
-    public void setState(JButton[] newButtons) {
-        this.buttons = newButtons;
-    }
-
-    public void setTurn(String newTurn) {
-        turn = newTurn;
-    }
-
-    // public static void resetGame(JButton[] buttons, String turn) {
-    //     for(int i = 0; i < buttons.length; i++) {
-    //         buttons[i].setText("");
-    //         buttons[i].setEnabled(true);
-            
-    //     }
-
-    //     turn = "O";
-    // }
-
-
+    // Resets the game 
     public void resetGame() {
         for(int i = 0; i < buttons.length; i++) {
             buttons[i].setText("");
             buttons[i].setEnabled(true);
-            
+            buttons[i].setBorderPainted(true);
         }
 
         turn = "O";
     }
-
-
-
-
-    
-
-
 
 }

@@ -2,14 +2,12 @@
 import javax.swing.*; // User Interface
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
 
-public class TicTacToe  extends JFrame{
+public class TicTacToe extends JFrame{
 
     public TicTacToe() {
 
-        GameScreen game = new GameScreen();
 
-        add(game, BorderLayout.CENTER);
-       // add(new GameOverScreen());
+        add(new MainPanel());
 
         // Setting JFrame Properties
         setResizable(false); // Frame is not resizable
