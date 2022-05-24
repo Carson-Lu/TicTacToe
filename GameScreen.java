@@ -179,6 +179,7 @@ public class GameScreen extends JPanel {
         return true;
     }
 
+
     // Getters
     // Gets all the buttons
     public JButton[] getButtons() {

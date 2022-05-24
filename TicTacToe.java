@@ -5,8 +5,6 @@ import java.awt.*; // User interface (Abstract Windowing Toolkit)
 public class TicTacToe extends JFrame{
 
     public TicTacToe() {
-
-
         add(new MainPanel());
 
         // Setting JFrame Properties

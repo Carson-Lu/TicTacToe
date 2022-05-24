@@ -25,21 +25,20 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
 
         if (uInput.equals("Play Again")) {
             game.resetGame();
+            
         } else {
             game.userPlaced(uInput);
             game.nextState();
+
         }
 
         if (game.gameEnded(game.getButtons())) {
             end.enableReset();
         } 
-
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // Do nothing
-        
     }
 
     @Override
@@ -58,19 +57,28 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
     public void mouseEntered(MouseEvent e) {
         String turn = game.getTurn();
 
-        JButton j = (JButton) e.getSource();
+        JButton b = (JButton) e.getSource();
 
-        if (j.isEnabled()) {
-            j.setText(turn);
+        if (b.isEnabled()) {
+            b.setText(turn);
+            b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            b.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
+
+            if (turn.equals("X")) {
+                b.setForeground(Color.BLUE);
+            } else {
+                b.setForeground(Color.RED);
+            }
+
         }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        JButton j = (JButton) e.getSource();
+        JButton b = (JButton) e.getSource();
 
-        if (j.isEnabled()) {
-            j.setText("");
+        if (b.isEnabled()) {
+            b.setText("");
         }
         
         
