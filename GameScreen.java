@@ -1,21 +1,21 @@
 // Importing Packages
 import javax.swing.*; // User Interface
 import javax.swing.plaf.DimensionUIResource;
-
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
-import java.awt.event.*; // Allows for events
 
-public class GameScreen extends JPanel implements ActionListener {
+
+public class GameScreen extends JPanel {
 
     final static boolean shouldFill = true;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    private JButton[] buttons = new JButton[9];
-    private String turn = "O";
     private JLabel labelTurn;
+    private String turn = "O";
+    private JButton[] buttons = new JButton[9];
 
 
-    public GameScreen() {
+    public GameScreen(MainPanel mPanel) {
+
 
         setMinimumSize(new Dimension(330, 330));
 
@@ -56,7 +56,8 @@ public class GameScreen extends JPanel implements ActionListener {
             button.setContentAreaFilled(false);
             button.setBorderPainted(true);
             button.setPreferredSize(new DimensionUIResource(50, 50));
-            button.addActionListener(this);
+            button.addActionListener(mPanel);
+            button.addMouseListener(mPanel);
             button.setActionCommand(Integer.toString(i));
             buttons[i] = button;
             c.fill = GridBagConstraints.BOTH;
@@ -72,19 +73,18 @@ public class GameScreen extends JPanel implements ActionListener {
         // End of Buttons
     }
 
-    // Button listener
-    public void actionPerformed(ActionEvent e) {
-        String uInput = e.getActionCommand();
-        Integer index = Integer.valueOf(uInput);
+    // Places X or O
+    public void userPlaced(String e) {
+        Integer index = Integer.valueOf(e);
 
         // Makes button unclickable
         buttons[index].setEnabled(false);
         buttons[index].setText(turn);
         buttons[index].setBorderPainted(false);
 
-        nextState();
-
     }
+
+ 
 
     // Brings game to the next state
     public void nextState() {
@@ -166,6 +166,50 @@ public class GameScreen extends JPanel implements ActionListener {
         }
 
         turn = "O";
+    }
+
+    
+    public boolean gameEnded(JButton[] newButtons) {
+        for (Integer i = 0; i < newButtons.length; i++) {
+            if (newButtons[i].isEnabled()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Getters
+    // Gets all the buttons
+    public JButton[] getButtons() {
+        return buttons;
+    }
+
+    // Gets turn
+    public String getTurn() {
+        return turn;
+    }
+
+    public JLabel getLabel() {
+        return labelTurn;
+    }
+
+
+    // Setters
+    public void setButtons(JButton[] newButtons) {
+        this.buttons = newButtons;
+    }
+
+    public void setTurn(String newTurn) {
+        this.turn = newTurn;
+    }
+
+    public void setLabel(JLabel newLabel) {
+        this.labelTurn = newLabel;
+    }
+
+    public void setHoverLabel() {
+        
     }
 
 }
