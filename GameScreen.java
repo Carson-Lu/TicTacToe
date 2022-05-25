@@ -1,6 +1,8 @@
 // Importing Packages
 import javax.swing.*; // User Interface
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.plaf.metal.MetalButtonUI;
+
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
 
 
@@ -97,7 +99,7 @@ public class GameScreen extends JPanel {
         }
 
         // Sets label
-        labelTurn.setText(turn + "'s turn");
+        setLabel(turn);
 
         determineDraw();
 
@@ -166,6 +168,7 @@ public class GameScreen extends JPanel {
         }
 
         turn = "O";
+        setLabel(turn);
     }
 
     
@@ -177,6 +180,21 @@ public class GameScreen extends JPanel {
         }
 
         return true;
+    }
+
+    public void setLabel(String turn) {
+        labelTurn.setText(this.turn + "'s turn");
+    }
+
+    public void setColours() {
+        for (Integer i = 0; i < buttons.length; i++) {
+            buttons[i].setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return null;
+                }
+            });
+        }
+
     }
 
 

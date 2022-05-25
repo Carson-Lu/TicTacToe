@@ -35,10 +35,13 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         if (game.gameEnded(game.getButtons())) {
             end.enableReset();
         } 
+
+        game.setColours();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Do nothing
     }
 
     @Override

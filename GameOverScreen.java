@@ -24,6 +24,7 @@ public class GameOverScreen extends JPanel{
         reset.setContentAreaFilled(false);
         reset.setBorderPainted(false);
         reset.setEnabled(false);
+        reset.setVisible(false);
 
     }
 
@@ -33,6 +34,7 @@ public class GameOverScreen extends JPanel{
         reset.setContentAreaFilled(true);
         reset.setBorderPainted(true);
         reset.setEnabled(true);
+        reset.setVisible(true);
 
     }
 
