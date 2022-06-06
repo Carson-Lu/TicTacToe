@@ -11,23 +11,18 @@ public class GameScreen extends JPanel {
     final static boolean shouldFill = false;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
-    final static Integer BUTTONWIDTH = 50;
+    final static Integer BUTTONWIDTH = 90;
     final static Integer BUTTONHEIGHT = BUTTONWIDTH;
     final static Integer WIDTH = 330;
-    final static Integer HEIGHT = 430;
     private JLabel labelTurn;
     private String turn = "O";
     private JButton[] buttons = new JButton[9];
-
-    private GameGrid grid = new GameGrid();
+    private JButton buttonShare, buttonReset;
 
 
     public GameScreen(MainPanel mPanel) {
 
         setOpaque(false);
-
-
-
 
         // Change x and y coordinate when adding GridBagLayout components
         if (RIGHT_TO_LEFT) {
@@ -48,18 +43,39 @@ public class GameScreen extends JPanel {
 
         setLayout(new GridBagLayout());
 
+        buttonShare = new JButton("<html>Share <br> Board</html>");
+        buttonShare.setMaximumSize(new Dimension(50, 50));
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 0; // x location
+        c.gridy = 0; // y location
+        c.gridwidth = 1; // width
+        c.gridheight = 1; // height
+        c.ipady = 0; // Extra vertical space
+        c.insets = new Insets(0, 0, 0, 0); // Padding if desired
+        add(buttonShare, c);
+
         // Creating Label and properties
         labelTurn = new JLabel(turn + "'s turn", SwingConstants.CENTER);
         c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0; // x location
+        c.gridx = 1; // x location
         c.gridy = 0; // y location
-        c.gridwidth = 3; // width
+        c.gridwidth = 1; // width
         c.gridheight = 1; // height
         c.ipady = 0; // Extra vertical space
-        c.insets = new Insets(0, 0, 0, 0); // Whitespace]
+        c.insets = new Insets(0, 0, 0, 0); // Padding if desired
         add(labelTurn, c);
 
-
+        buttonReset = new JButton("<html><center> Play <br> Again </center><html>");
+        buttonReset.setMaximumSize(new Dimension(50, 50));
+        buttonReset.addActionListener(mPanel);
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 2; // x location
+        c.gridy = 0; // y location
+        c.gridwidth = 1; // width
+        c.gridheight = 1; // height
+        c.ipady = 0; // Extra vertical space
+        c.insets = new Insets(0, 0, 0, 0); // Padding if desired
+        add(buttonReset, c);
 
         // Creating buttons and properties
         for(int i = 0; i < buttons.length; i++) {
@@ -80,7 +96,7 @@ public class GameScreen extends JPanel {
             c.gridwidth = 1; // width
             c.gridheight = 1; // height
             c.ipady = 0; // Extra vertical space
-            c.insets = new Insets(0,0,0,0); // Whitespace
+            c.insets = new Insets(0,0,0,0); 
             add(button, c);
         }
 
@@ -110,7 +126,7 @@ public class GameScreen extends JPanel {
         }
 
         // Sets label
-        setLabel(turn);
+        updateLabel(turn);
 
         determineDraw();
 
@@ -177,11 +193,11 @@ public class GameScreen extends JPanel {
         }
 
         turn = "O";
-        setLabel(turn);
+        updateLabel(turn);
     }
 
     
-    public boolean gameEnded(JButton[] newButtons) {
+    public boolean hasGameEnded(JButton[] newButtons) {
         for (Integer i = 0; i < newButtons.length; i++) {
             if (newButtons[i].isEnabled()) {
                 return false;
@@ -191,11 +207,11 @@ public class GameScreen extends JPanel {
         return true;
     }
 
-    public void setLabel(String turn) {
+    public void updateLabel(String turn) {
         labelTurn.setText(this.turn + "'s turn");
     }
 
-    public void setColours() {
+    public void updateColours() {
         for (Integer i = 0; i < buttons.length; i++) {
             buttons[i].setUI(new MetalButtonUI() {
                 protected Color getDisabledTextColor() {
@@ -218,22 +234,27 @@ public class GameScreen extends JPanel {
         return turn;
     }
 
-    public JLabel getLabel() {
-        return labelTurn;
+    public void setLabelColor(Color c) {
+        labelTurn.setForeground(c);
     }
 
+    
+    public void disableReset() {
+        buttonReset.setOpaque(false);
+        buttonReset.setContentAreaFilled(false);
+        buttonReset.setBorderPainted(false);
+        buttonReset.setEnabled(false);
+        buttonReset.setVisible(false);
 
-    // Setters
-    public void setButtons(JButton[] newButtons) {
-        this.buttons = newButtons;
     }
 
-    public void setTurn(String newTurn) {
-        this.turn = newTurn;
-    }
+    public void enableReset() {
+        buttonReset.setOpaque(true);
+        buttonReset.setContentAreaFilled(true);
+        buttonReset.setBorderPainted(true);
+        buttonReset.setEnabled(true);
+        buttonReset.setVisible(true);
 
-    public void setLabel(JLabel newLabel) {
-        this.labelTurn = newLabel;
     }
 
 

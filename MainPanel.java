@@ -4,6 +4,9 @@ import java.awt.*; // User interface (Abstract Windowing Toolkit)
 import java.awt.event.*; // Allows for events
 
 public class MainPanel extends JPanel implements ActionListener, MouseListener {
+    final static Color O_COLOR = Color.RED;
+    final static Color X_COLOR = Color.BLUE;
+
     private GameScreen game = new GameScreen(this);
     private GameOverScreen end = new GameOverScreen(this);
     private GameGrid grid = new GameGrid();
@@ -12,7 +15,6 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         LayoutManager overlay = new OverlayLayout(this);
         setLayout(overlay);
         
-
         add(game, overlay);
         add(grid, overlay);
         add(end, overlay);
@@ -26,6 +28,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         
 
         if (uInput.equals("Play Again")) {
+            game.setLabelColor(Color.BLACK);
             game.resetGame();
             
         } else {
@@ -34,11 +37,17 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
 
         }
 
-        if (game.gameEnded(game.getButtons())) {
+        if (game.hasGameEnded(game.getButtons())) {
+            if (game.getTurn().equals("X")) {
+                game.setLabelColor(X_COLOR);
+            } else {
+                game.setLabelColor(O_COLOR);
+            }
             end.enableReset();
+
         } 
 
-        game.setColours();
+        game.updateColours();
     }
 
     @Override
@@ -70,9 +79,9 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
             b.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
 
             if (turn.equals("X")) {
-                b.setForeground(Color.BLUE);
+                b.setForeground(X_COLOR);
             } else {
-                b.setForeground(Color.RED);
+                b.setForeground(O_COLOR);
             }
 
         }

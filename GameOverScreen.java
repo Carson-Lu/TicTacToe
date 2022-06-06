@@ -17,7 +17,6 @@ public class GameOverScreen extends JPanel{
 
     }
 
-
     public void disableReset() {
         reset.setOpaque(false);
         reset.setContentAreaFilled(false);
