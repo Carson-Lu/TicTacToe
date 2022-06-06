@@ -9,7 +9,6 @@ public class GameOverScreen extends JPanel{
 
     public GameOverScreen(MainPanel mPanel) {
         //setBackground(new Color(213, 134, 145, 123));
-        
         disableReset();
         reset.addActionListener(mPanel);
 

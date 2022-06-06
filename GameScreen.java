@@ -8,18 +8,26 @@ import java.awt.*; // User interface (Abstract Windowing Toolkit)
 
 public class GameScreen extends JPanel {
 
-    final static boolean shouldFill = true;
+    final static boolean shouldFill = false;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
+    final static Integer BUTTONWIDTH = 50;
+    final static Integer BUTTONHEIGHT = BUTTONWIDTH;
+    final static Integer WIDTH = 330;
+    final static Integer HEIGHT = 430;
     private JLabel labelTurn;
     private String turn = "O";
     private JButton[] buttons = new JButton[9];
 
+    private GameGrid grid = new GameGrid();
+
 
     public GameScreen(MainPanel mPanel) {
 
+        setOpaque(false);
 
-        setMinimumSize(new Dimension(330, 330));
+
+
 
         // Change x and y coordinate when adding GridBagLayout components
         if (RIGHT_TO_LEFT) {
@@ -48,16 +56,20 @@ public class GameScreen extends JPanel {
         c.gridwidth = 3; // width
         c.gridheight = 1; // height
         c.ipady = 0; // Extra vertical space
-        c.insets = new Insets(5, 5, 5, 5); // Whitespace
+        c.insets = new Insets(0, 0, 0, 0); // Whitespace]
         add(labelTurn, c);
+
+
 
         // Creating buttons and properties
         for(int i = 0; i < buttons.length; i++) {
             JButton button = new JButton("");
             button.setOpaque(false);
             button.setContentAreaFilled(false);
-            button.setBorderPainted(true);
-            button.setPreferredSize(new DimensionUIResource(50, 50));
+            button.setBorderPainted(false);
+            button.setPreferredSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
+            button.setMinimumSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
+            button.setMaximumSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
             button.addActionListener(mPanel);
             button.addMouseListener(mPanel);
             button.setActionCommand(Integer.toString(i));
@@ -68,7 +80,7 @@ public class GameScreen extends JPanel {
             c.gridwidth = 1; // width
             c.gridheight = 1; // height
             c.ipady = 0; // Extra vertical space
-            c.insets = new Insets(5, 5, 5, 5); // Whitespace
+            c.insets = new Insets(0,0,0,0); // Whitespace
             add(button, c);
         }
 
@@ -82,7 +94,6 @@ public class GameScreen extends JPanel {
         // Makes button unclickable
         buttons[index].setEnabled(false);
         buttons[index].setText(turn);
-        buttons[index].setBorderPainted(false);
 
     }
 
@@ -126,7 +137,6 @@ public class GameScreen extends JPanel {
     public void setWinner() {
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setEnabled(false);
-            buttons[i].setBorderPainted(false);
         }
 
         labelTurn.setText(turn + " wins!");
@@ -164,7 +174,6 @@ public class GameScreen extends JPanel {
         for(int i = 0; i < buttons.length; i++) {
             buttons[i].setText("");
             buttons[i].setEnabled(true);
-            buttons[i].setBorderPainted(true);
         }
 
         turn = "O";
@@ -227,8 +236,6 @@ public class GameScreen extends JPanel {
         this.labelTurn = newLabel;
     }
 
-    public void setHoverLabel() {
-        
-    }
 
 }
+

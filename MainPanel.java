@@ -6,15 +6,17 @@ import java.awt.event.*; // Allows for events
 public class MainPanel extends JPanel implements ActionListener, MouseListener {
     private GameScreen game = new GameScreen(this);
     private GameOverScreen end = new GameOverScreen(this);
+    private GameGrid grid = new GameGrid();
 
     public MainPanel() {
-
-    
         LayoutManager overlay = new OverlayLayout(this);
         setLayout(overlay);
+        
 
-        add(game, BorderLayout.CENTER);
-        add(end, BorderLayout.CENTER);
+        add(game, overlay);
+        add(grid, overlay);
+        add(end, overlay);
+
     
     }
 
