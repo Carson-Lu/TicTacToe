@@ -68,6 +68,7 @@ public class GameScreen extends JPanel {
         buttonReset = new JButton("<html><center> Play <br> Again </center><html>");
         buttonReset.setMaximumSize(new Dimension(50, 50));
         buttonReset.addActionListener(mPanel);
+        buttonReset.setActionCommand("Reset");
         c.fill = GridBagConstraints.NONE;
         c.gridx = 2; // x location
         c.gridy = 0; // y location
@@ -75,6 +76,7 @@ public class GameScreen extends JPanel {
         c.gridheight = 1; // height
         c.ipady = 0; // Extra vertical space
         c.insets = new Insets(0, 0, 0, 0); // Padding if desired
+        disableReset();
         add(buttonReset, c);
 
         // Creating buttons and properties
@@ -240,20 +242,23 @@ public class GameScreen extends JPanel {
 
     
     public void disableReset() {
-        buttonReset.setOpaque(false);
-        buttonReset.setContentAreaFilled(false);
-        buttonReset.setBorderPainted(false);
         buttonReset.setEnabled(false);
-        buttonReset.setVisible(false);
+        // buttonReset.setOpaque(false);
+        // buttonReset.setContentAreaFilled(false);
+        // buttonReset.setBorderPainted(false);
+        // buttonReset.setEnabled(false);
+        // buttonReset.setVisible(false);
 
     }
 
     public void enableReset() {
-        buttonReset.setOpaque(true);
-        buttonReset.setContentAreaFilled(true);
-        buttonReset.setBorderPainted(true);
         buttonReset.setEnabled(true);
-        buttonReset.setVisible(true);
+
+        // buttonReset.setOpaque(true);
+        // buttonReset.setContentAreaFilled(true);
+        // buttonReset.setBorderPainted(true);
+        // buttonReset.setEnabled(true);
+        // buttonReset.setVisible(true);
 
     }
 

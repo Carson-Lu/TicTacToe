@@ -8,7 +8,6 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
     final static Color X_COLOR = Color.BLUE;
 
     private GameScreen game = new GameScreen(this);
-    private GameOverScreen end = new GameOverScreen(this);
     private GameGrid grid = new GameGrid();
 
     public MainPanel() {
@@ -17,17 +16,15 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         
         add(game, overlay);
         add(grid, overlay);
-        add(end, overlay);
 
     
     }
 
     public void actionPerformed(ActionEvent e) {
         String uInput = e.getActionCommand();
-        end.disableReset();
-        
 
-        if (uInput.equals("Play Again")) {
+        if (uInput.equals("Reset")) {
+            game.disableReset();
             game.setLabelColor(Color.BLACK);
             game.resetGame();
             
@@ -36,14 +33,14 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
             game.nextState();
 
         }
-
+ 
         if (game.hasGameEnded(game.getButtons())) {
             if (game.getTurn().equals("X")) {
                 game.setLabelColor(X_COLOR);
             } else {
                 game.setLabelColor(O_COLOR);
             }
-            end.enableReset();
+            game.enableReset();
 
         } 
 
