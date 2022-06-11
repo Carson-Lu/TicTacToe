@@ -23,7 +23,10 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         String uInput = e.getActionCommand();
 
-        if (uInput.equals("Reset")) {
+        if (uInput.equals("copy")) {
+            game.writeToClipboard(game.boardToText());
+
+        } else if (uInput.equals("Reset")) {
             game.disableReset();
             game.setLabelColor(Color.BLACK);
             game.resetGame();

@@ -2,7 +2,9 @@
 import javax.swing.*; // User Interface
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.metal.MetalButtonUI;
-
+import java.awt.Toolkit;
+import java.awt.datatransfer.*;
+import java.util.Arrays;
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
 
 
@@ -45,6 +47,8 @@ public class GameScreen extends JPanel {
 
         buttonShare = new JButton("<html>Share <br> Board</html>");
         buttonShare.setMaximumSize(new Dimension(50, 50));
+        buttonShare.addActionListener(mPanel);
+        buttonShare.setActionCommand("copy");
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0; // x location
         c.gridy = 0; // y location
@@ -243,6 +247,8 @@ public class GameScreen extends JPanel {
     
     public void disableReset() {
         buttonReset.setEnabled(false);
+
+        // If you want to make the button invisible instead of just disabled
         // buttonReset.setOpaque(false);
         // buttonReset.setContentAreaFilled(false);
         // buttonReset.setBorderPainted(false);
@@ -260,6 +266,38 @@ public class GameScreen extends JPanel {
         // buttonReset.setEnabled(true);
         // buttonReset.setVisible(true);
 
+    }
+
+    public String boardToText() {
+
+        String[] board = new String[9];
+
+        for (Integer i = 0; i < buttons.length; i++ ) {
+            String box = buttons[i].getText();
+            if (box.equals("O")) {
+                box = "⭕";
+            } else if (box.equals("X")) {
+                box = "❌";
+            } else {
+                box = "⬜";
+            }
+            board[i] = box;
+
+        }
+
+        System.out.println(Arrays.toString(board));
+
+        String s = (board[0] + board[1] + board[2] + "\n" +
+                    board[3] + board[4] + board[5] + "\n" +
+                    board[6] + board[7] + board[8]);
+
+        return s;
+    }
+
+    public void writeToClipboard(String s) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable transferable = new StringSelection(s);
+        clipboard.setContents(transferable, null);
     }
 
 
