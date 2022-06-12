@@ -4,12 +4,10 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
-import java.util.Arrays;
 import java.awt.*; // User interface (Abstract Windowing Toolkit)
 
 
 public class GameScreen extends JPanel {
-
     final static boolean shouldFill = false;
     final static boolean shouldWeightX = true;
     final static boolean RIGHT_TO_LEFT = false;
@@ -45,6 +43,7 @@ public class GameScreen extends JPanel {
 
         setLayout(new GridBagLayout());
 
+        // Share button properties 
         buttonShare = new JButton("<html>Share <br> Board</html>");
         buttonShare.setMaximumSize(new Dimension(50, 50));
         buttonShare.addActionListener(mPanel);
@@ -58,7 +57,7 @@ public class GameScreen extends JPanel {
         c.insets = new Insets(0, 0, 0, 0); // Padding if desired
         add(buttonShare, c);
 
-        // Creating Label and properties
+        // Label for turn properties
         labelTurn = new JLabel(turn + "'s turn", SwingConstants.CENTER);
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1; // x location
@@ -69,6 +68,7 @@ public class GameScreen extends JPanel {
         c.insets = new Insets(0, 0, 0, 0); // Padding if desired
         add(labelTurn, c);
 
+        // Reset Button properties
         buttonReset = new JButton("<html><center> Play <br> Again </center><html>");
         buttonReset.setMaximumSize(new Dimension(50, 50));
         buttonReset.addActionListener(mPanel);
@@ -83,15 +83,13 @@ public class GameScreen extends JPanel {
         disableReset();
         add(buttonReset, c);
 
-        // Creating buttons and properties
+        // Creating game buttons and properties
         for(int i = 0; i < buttons.length; i++) {
             JButton button = new JButton("");
             button.setOpaque(false);
             button.setContentAreaFilled(false);
             button.setBorderPainted(false);
             button.setPreferredSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
-            button.setMinimumSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
-            button.setMaximumSize(new DimensionUIResource(BUTTONWIDTH, BUTTONHEIGHT));
             button.addActionListener(mPanel);
             button.addMouseListener(mPanel);
             button.setActionCommand(Integer.toString(i));
@@ -179,6 +177,7 @@ public class GameScreen extends JPanel {
     }
 
     // Will determine draw if all boxes have been filled before someone has one, call determine winner after to check if someone has won
+    // Draw only displayed when all boxes have been filled and there still is no winner
     public void determineDraw() {
         String boardState = "";
 
@@ -198,11 +197,17 @@ public class GameScreen extends JPanel {
             buttons[i].setEnabled(true);
         }
 
-        turn = "O";
+        // Lets loser of last game go first
+        if (getTurn().equals("X")) {
+            turn = "O";
+        } else {
+            turn = "X";
+        }
+
         updateLabel(turn);
     }
 
-    
+    // Produces true if game is over (does this by checking if tictactoe board is still interactable)
     public boolean hasGameEnded(JButton[] newButtons) {
         for (Integer i = 0; i < newButtons.length; i++) {
             if (newButtons[i].isEnabled()) {
@@ -213,6 +218,7 @@ public class GameScreen extends JPanel {
         return true;
     }
 
+    // Updates labelTurn with given text
     public void updateLabel(String turn) {
         labelTurn.setText(this.turn + "'s turn");
     }
@@ -227,7 +233,6 @@ public class GameScreen extends JPanel {
         }
 
     }
-
 
     // Getters
     // Gets all the buttons
@@ -268,6 +273,7 @@ public class GameScreen extends JPanel {
 
     }
 
+    // Converts the board into text (emojis)
     public String boardToText() {
 
         String[] board = new String[9];
@@ -285,8 +291,6 @@ public class GameScreen extends JPanel {
 
         }
 
-        System.out.println(Arrays.toString(board));
-
         String s = (board[0] + board[1] + board[2] + "\n" +
                     board[3] + board[4] + board[5] + "\n" +
                     board[6] + board[7] + board[8]);
@@ -294,6 +298,7 @@ public class GameScreen extends JPanel {
         return s;
     }
 
+    // Copies given text to user's clipboard
     public void writeToClipboard(String s) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         Transferable transferable = new StringSelection(s);

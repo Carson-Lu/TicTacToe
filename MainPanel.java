@@ -16,21 +16,22 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         
         add(game, overlay);
         add(grid, overlay);
-
-    
     }
 
     public void actionPerformed(ActionEvent e) {
         String uInput = e.getActionCommand();
 
+        // User pressed "Copy board" button
         if (uInput.equals("copy")) {
             game.writeToClipboard(game.boardToText());
 
+        // User pressed Reset Game button
         } else if (uInput.equals("Reset")) {
             game.disableReset();
             game.setLabelColor(Color.BLACK);
             game.resetGame();
             
+        // User placed item on tictactoe game board
         } else {
             game.userPlaced(uInput);
             game.nextState();
@@ -44,9 +45,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
                 game.setLabelColor(O_COLOR);
             }
             game.enableReset();
-
         } 
-
         game.updateColours();
     }
 
@@ -67,6 +66,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         
     }
 
+    // Hover feature for game board where it shows "X" or "O" on button depending on turn
     @Override
     public void mouseEntered(MouseEvent e) {
         String turn = game.getTurn();
@@ -87,6 +87,7 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         }
     }
 
+    // Completes hover feature, removes "X" or "O" once mouse exits button
     @Override
     public void mouseExited(MouseEvent e) {
         JButton b = (JButton) e.getSource();
@@ -94,9 +95,5 @@ public class MainPanel extends JPanel implements ActionListener, MouseListener {
         if (b.isEnabled()) {
             b.setText("");
         }
-        
-        
     }
-
-    
 }

@@ -9,7 +9,7 @@ public class TicTacToe extends JFrame{
 
     public TicTacToe() {
         add(new MainPanel());
-
+        
         // Setting JFrame Properties
         setDefaultLookAndFeelDecorated(true);
         setResizable(false); // Frame is not resizable
